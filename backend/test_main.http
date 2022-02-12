@@ -5,7 +5,7 @@ Accept: application/json
 
 ###
 
-GET http://127.0.0.1:8000/bathroom/get/1/average
+GET http://127.0.0.1:8000/bathroom/get/average/all
 Accept: application/json
 
 ###

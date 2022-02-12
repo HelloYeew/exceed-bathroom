@@ -21,31 +21,34 @@ class Bathroom(BaseModel):
     total_time: int
     total_session: int
 
-current_time = str(datetime.now())
 
 # Reset all the data in the database to the default
-for i in range(1, 4):
-    # Find that is that room exist in database
-    result = collection.find_one({"room_number": i})
-    if result is None:
-        # If not, create a new one
-        collection.insert_one({
-            "room_number": i,
-            "status": False,
-            "last_update": current_time,
-            "total_time": 0,
-            "total_session": 0}
-        )
-    else:
-        # Update all value to default value
-        collection.update_one({"room_number": i}, {"$set": {
-            "room_number": i,
-            "status": False,
-            "last_update": current_time,
-            "total_time": 0,
-            "total_session": 0}}
-                              )
-
+@app.post('/bathroom/reset')
+async def reset_bathroom():
+    current_time = str(datetime.now())
+    # Reset all the data in the database to the default
+    for i in range(1, 4):
+        # Find that is that room exist in database
+        result = collection.find_one({"room_number": i})
+        if result is None:
+            # If not, create a new one
+            collection.insert_one({
+                "room_number": i,
+                "status": False,
+                "last_update": current_time,
+                "total_time": 0,
+                "total_session": 0}
+            )
+        else:
+            # Update all value to default value
+            collection.update_one({"room_number": i}, {"$set": {
+                "room_number": i,
+                "status": False,
+                "last_update": current_time,
+                "total_time": 0,
+                "total_session": 0}}
+                                  )
+    return {"message": "Reset all the data in the database to the default"}
 
 # Return all the rooms
 @app.get("/bathroom/get")
@@ -81,8 +84,16 @@ async def get_all_bathroom_average_time():
         total_time_all_room += i["total_time"]
         total_session_all_room += i["total_session"]
     if total_session_all_room == 0:
-        return {"average_time": 0}
-    return {"average_time": total_time_all_room / total_session_all_room}
+        return {
+            "total_time_all_room": total_time_all_room,
+            "total_session_all_room": total_session_all_room,
+            "average_time": 0
+        }
+    return {
+        "total_time_all_room": total_time_all_room,
+        "total_session_all_room": total_session_all_room,
+        "average_time": total_time_all_room / total_session_all_room
+    }
 
 
 # Put a new value to the target bathroom
