@@ -53,23 +53,26 @@ Example response:
     {
         "room_number": 1,
         "status": false,
-        "last_update": "2022-02-12 12:22:46.535424",
-        "total_time": 65.387313,
-        "total_session": 2
+        "last_update": "2022-02-12 17:06:33.575416",
+        "total_time": 426.641345,
+        "total_session": 10,
+        "time_pass": "00:06:54"
     },
     {
         "room_number": 2,
         "status": false,
-        "last_update": "2022-02-12 12:23:03.774329",
-        "total_time": 80.09358900000001,
-        "total_session": 2
+        "last_update": "2022-02-12 17:06:29.805018",
+        "total_time": 439.115541,
+        "total_session": 8,
+        "time_pass": "00:06:54"
     },
     {
         "room_number": 3,
         "status": false,
-        "last_update": "2022-02-12 12:23:16.478801",
-        "total_time": 90.19993099999999,
-        "total_session": 2
+        "last_update": "2022-02-12 17:06:31.743848",
+        "total_time": 437.549712,
+        "total_session": 8,
+        "time_pass": "00:06:54"
     }
 ]
 ```

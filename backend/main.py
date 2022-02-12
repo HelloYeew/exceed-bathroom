@@ -72,7 +72,7 @@ async def get_all_bathroom():
         return {"message": "No data"}
     else:
         for i in range(0, len(r)):
-            time_pass = (datetime.now() - parser.parse(r[0]["last_update"])).total_seconds()
+            time_pass = (datetime.now() - parser.parse(r[i]["last_update"])).total_seconds()
             hours = time_pass//3600
             time_pass = time_pass - hours*3600
             minutes = time_pass//60
