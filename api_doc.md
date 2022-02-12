@@ -141,7 +141,7 @@ Example response (404):
 
 ## Put a new status to the target bathroom
 
-> PUT /bathroom/change/{room_number}/{status}
+> POST /bathroom/change/{room_number}/{status}
 
 room_number: int, from 1-3
 status: boolean, true if occupied, false if not (to not make the conflict between backend and hardware, if conflict occurs, the status will not change and return 400)

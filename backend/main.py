@@ -118,7 +118,7 @@ async def get_all_bathroom_average_time():
 
 
 # Put a new value to the target bathroom
-@app.put("/bathroom/change/{room_number}/{status}")
+@app.post("/bathroom/change/{room_number}/{status}")
 async def change_bathroom_status(room_number: int, status: bool):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
     if r is None:
