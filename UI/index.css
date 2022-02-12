@@ -1,0 +1,97 @@
+*{
+    margin: 0;
+    padding:0 ;
+    box-sizing: border-box;
+}
+
+.main-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+.card-container {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.card{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background: hsl(110, 100%, 65%);
+    width:200px;
+    height:310px;
+    border-radius:10px;
+    margin: 9px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+}
+
+.time{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 10rem;
+    height: 12rem;
+    background-color: hsl(209, 0%, 20%);
+    color: white;
+    border-radius:10px;
+    visibility: hidden;
+
+}
+
+.btn-graph{
+    padding: 1rem 2rem;
+    background-color: hsl(209, 100%, 68%);
+    border-radius: 1rem;
+    border: 0;
+    box-shadow: 0px 2px 15px -1px rgba(0, 0, 0, 0.2);
+    outline: none;
+    color: white;
+    font-weight: 700;
+
+}
+
+.btn-graph:hover{
+    color: hsl(209, 100%, 68%);
+    background-color: white;
+    cursor: pointer;
+}
+
+#chartContainer{
+    position: absolute;
+
+    top: 0;
+    z-index: 1;
+}
+
+.display{
+    visibility: visible;
+    height: 300px; 
+    width: 60%;
+}
+.hidden{
+    visibility: hidden;
+}
+
+body {
+    background: linear-gradient(to right, #ffafbd, #ffc3a0);
+  }
+
+.TimeArrive {
+    background-color: aqua;
+    width: 300px;
+    height: 300px;
+}
+
+h1 {
+    margin-bottom: 40px;
+}
