@@ -135,7 +135,7 @@ async def change_bathroom_status(room_number: int, status: bool):
         if r["status"] != status:
             # It can update the status
             # First case, just get in
-            if r["status"] is False and status is True:
+            if r["status"] is True and status is False:
                 # Update the status and last update time
                 new_status = {
                     "status": status,
