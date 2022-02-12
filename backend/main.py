@@ -51,7 +51,7 @@ async def reset_bathroom():
     return {"message": "Reset all the data in the database to the default"}
 
 # Return all the rooms
-@app.get("/bathroom/get")
+@app.get("/bathroom/get/all")
 async def get_all_bathroom():
     r = list(collection.find({}, {"_id": 0}))
     if len(r) == 0:
@@ -64,14 +64,21 @@ async def get_all_bathroom():
 @app.get("/bathroom/get/{room_number}")
 async def get_bathroom(room_number: int):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
-    return r
+    if r is None:
+        return {"message": "No data for this bathroom"}
+    else:
+        return r
 
 
 # Return an average time for a specific room
 @app.get("/bathroom/get/average/{room_number}/")
 async def get_bathroom_average_time(room_number: int):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
-    return {"average_time": r["total_time"] / r["total_session"]}
+    return {
+        "total_time": r["total_time"],
+        "total_session": r["total_session"],
+        "average_time": r["total_time"] / r["total_session"]
+    }
 
 
 # Return ad average time for all the rooms
