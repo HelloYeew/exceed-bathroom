@@ -50,6 +50,7 @@ async def reset_bathroom():
                                   )
     return {"message": "Reset all the data in the database to the default"}
 
+
 # Return all the rooms
 @app.get("/bathroom/get")
 async def get_all_bathroom():
@@ -64,6 +65,8 @@ async def get_all_bathroom():
 @app.get("/bathroom/get/{room_number}")
 async def get_bathroom(room_number: int):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
+    if r is None:
+        raise HTTPException(status_code=404, detail="Room not found")
     return r
 
 
@@ -71,10 +74,12 @@ async def get_bathroom(room_number: int):
 @app.get("/bathroom/get/average/{room_number}/")
 async def get_bathroom_average_time(room_number: int):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
+    if r is None:
+        raise HTTPException(status_code=404, detail="Room not found")
     return {"average_time": r["total_time"] / r["total_session"]}
 
 
-# Return ad average time for all the rooms
+# Return an average time for all the rooms
 @app.get("/bathroom/get/average/all")
 async def get_all_bathroom_average_time():
     total_time_all_room = 0
@@ -93,6 +98,19 @@ async def get_all_bathroom_average_time():
         "total_time_all_room": total_time_all_room,
         "total_session_all_room": total_session_all_room,
         "average_time": total_time_all_room / total_session_all_room
+    }
+
+
+# Return an average time for a specific room
+@app.get("/bathroom/get/average/{room_number}/")
+async def get_bathroom_average_time(room_number: int):
+    r = collection.find_one({"room_number": room_number}, {"_id": 0})
+    if r is None:
+        raise HTTPException(status_code=404, detail="Room not found")
+    return {
+        "total_time": r["total_time"],
+        "total_session": r["total_session"],
+        "average_time": r["total_time"] / r["total_session"]
     }
 
 
@@ -129,4 +147,4 @@ async def change_bathroom_status(room_number: int, status: bool):
                 collection.update_one({"room_number": room_number}, {"$set": new_status})
         else:
             raise HTTPException(status_code=400, detail="Status is same with database")
-    return {"message": "Success"}
+    return {"message": "Update status success"}
