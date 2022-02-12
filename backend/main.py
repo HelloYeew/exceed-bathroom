@@ -48,7 +48,8 @@ async def reset_bathroom():
                 "total_time": 0,
                 "total_session": 0}}
                                   )
-    return {"message": "Reset all the data in the database to the default"}
+    return {"message": "Reset all the data in the database to the default successfully"}
+
 
 # Return all the rooms
 @app.get("/bathroom/get/all")
@@ -81,7 +82,7 @@ async def get_bathroom_average_time(room_number: int):
     }
 
 
-# Return ad average time for all the rooms
+# Return an average time for all the rooms
 @app.get("/bathroom/get/average/all")
 async def get_all_bathroom_average_time():
     total_time_all_room = 0
@@ -136,4 +137,4 @@ async def change_bathroom_status(room_number: int, status: bool):
                 collection.update_one({"room_number": room_number}, {"$set": new_status})
         else:
             raise HTTPException(status_code=400, detail="Status is same with database")
-    return {"message": "Success"}
+    return {"message": "Update status success"}
