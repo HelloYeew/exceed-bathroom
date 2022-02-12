@@ -48,7 +48,7 @@ async def reset_bathroom():
                 "total_time": 0,
                 "total_session": 0}}
                                   )
-    return {"message": "Reset all the data in the database to the default"}
+    return {"message": "Reset all the data in the database to the default successfully"}
 
 
 # Return all the rooms
@@ -66,7 +66,7 @@ async def get_all_bathroom():
 async def get_bathroom(room_number: int):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
     if r is None:
-        raise HTTPException(status_code=404, detail="Room not found")
+        raise HTTPException(status_code=404, detail="Target bathroom not found")
     return r
 
 
@@ -75,8 +75,12 @@ async def get_bathroom(room_number: int):
 async def get_bathroom_average_time(room_number: int):
     r = collection.find_one({"room_number": room_number}, {"_id": 0})
     if r is None:
-        raise HTTPException(status_code=404, detail="Room not found")
-    return {"average_time": r["total_time"] / r["total_session"]}
+        raise HTTPException(status_code=404, detail="Target bathroom not found")
+    return {
+        "total_time": r["total_time"],
+        "total_session": r["total_session"],
+        "average_time": r["total_time"] / r["total_session"]
+    }
 
 
 # Return an average time for all the rooms
@@ -98,19 +102,6 @@ async def get_all_bathroom_average_time():
         "total_time_all_room": total_time_all_room,
         "total_session_all_room": total_session_all_room,
         "average_time": total_time_all_room / total_session_all_room
-    }
-
-
-# Return an average time for a specific room
-@app.get("/bathroom/get/average/{room_number}/")
-async def get_bathroom_average_time(room_number: int):
-    r = collection.find_one({"room_number": room_number}, {"_id": 0})
-    if r is None:
-        raise HTTPException(status_code=404, detail="Room not found")
-    return {
-        "total_time": r["total_time"],
-        "total_session": r["total_session"],
-        "average_time": r["total_time"] / r["total_session"]
     }
 
 
