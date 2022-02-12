@@ -5,45 +5,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="index.css">
     <title>Toilet</title>
 
 </head>
 <body>
     <div class="main-container">
-        <h1>
-            Toilet Status
+        <h1 style="font-size: 3em;">
+            <img src="phop.jpeg" width="150" alt="phop" style="vertical-align: center;"> Toilet Status <img src="phop.jpeg" width="150" alt="phop" style="vertical-align: center;">
         </h1>
-        <div className = >
+        <div>
             
         </div>
         <div id="chartContainer" class="hidden display"></div>
         <div class="card-container">
-            <div class="card">
-                <div class="time">
-                    Time
-                    <p>0 </p>min
-                </div>
-                1
+            <div class="card" id="card1">
+                <p>1</p>
+                <div id="time1"></div>
             </div>
-            <div class="card">
-                <div class="time">
-                    Time
-                    <p>0 </p> min
-                </div>
+            <div class="card" id="card2">
                 2
+                <br/>
+                <div id="time2"></div>
             </div>
-            <div class="card">
-                <div class="time">
-                    Time
-                    <p>0 </p> min
-                </div>
+            <div class="card" id="card3">
                 3
+                <br/>
+                <div id="time3"></div>
             </div>
         </div>
-        <button class = "btn-graph" onclick="">
-            show
-        </button>
+        <div style="font-size: 2em">
+            Estimate time: <p id="remaining"></p>
+        </div>
 
     </div>
     <script src="index.js"></script>

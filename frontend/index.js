@@ -1,68 +1,36 @@
-"use-strict";
+const getBathroomStatus = (bathroomName) => {
+    // Fetches the bathroom status from the server
+    fetch('https://ecourse.cpe.ku.ac.th/exceed10/api/bathroom/get/all')
+        .then(response => response.json())
+        // get first element of the array
+        .then(data => data[bathroomName-1])
+        .then(data => {
+            var currentDate = new Date();
+            if (data.status) {
+                document.getElementById('card' + bathroomName).style = "background-color: hsl(110, 100%, 65%); flex-direction: column;";
+                // remaining time is time now - time last updated in seconds
+                document.getElementById('time' + bathroomName).innerHTML = "";
+            } else {
+                document.getElementById('card' + bathroomName).style = "background-color: red; flex-direction: column;";
+                document.getElementById('time' + bathroomName).innerHTML = data.time_pass;
+            }
+        })
+}
 
-const cards = document.querySelectorAll(".card");
-const status = document.querySelectorAll(".status");
-const timeDetails = document.querySelectorAll(".time");
-const times = document.querySelectorAll(".time>p");
+const getEstimateTime = () => {
+    fetch('https://ecourse.cpe.ku.ac.th/exceed10/api/bathroom/get/average/all')
+        .then(response => response.json())
+        .then(data => {
+                document.getElementById("remaining").innerHTML = parseInt(data.average_time) + " seconds";
+        })
+}
 
-const changeStage = (index) => {
-  cards[index].style.cssText = "background: hsl(359, 100%, 65%)";
-  timeDetails[index].style.cssText = "visibility: visible;";
-};
+window.setInterval (() => {
+    getBathroomStatus(1)
+    getBathroomStatus(2)
+    getBathroomStatus(3)
+},1000);
 
-const updateData = (data) => {
-  data.result.forEach((element) => {
-    if (!element.isAvailable) {
-      let index = Number(element.room_number);
-      changeStage(index - 1);
-    }
-  });
-};
-
-const updateTime = (data, num) => {
-  times[num - 1].textContent = data.result;
-};
-
-const getData = () => {
-  fetch(`https://ecourse.cpe.ku.ac.th/exceed10/api/bathroom/get/all`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      window.setInterval(updateData(data), 2000);
-      window.setInterval(updateTime(data), 2000);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-};
-
-const getTime = () => {
-  let number = [1, 2, 3];
-  number.forEach((num) => {
-    fetch(
-      `https://ecourse.cpe.ku.ac.th/exceed10/api/bathroom/get/average/` +
-        number,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(res);
-        window.setInterval(updateTime(data, num), 2000);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  });
-};
+window.setInterval (() => {
+    getEstimateTime()
+},1000);
